@@ -98,16 +98,9 @@ export default function ARViewer({ onClose }) {
       const model = gltf.scene;
       applyTexture(model, index);
 
-      const box = new THREE.Box3().setFromObject(model);
-      const size = box.getSize(new THREE.Vector3());
-      const maxDim = Math.max(size.x, size.y, size.z);
-      const normalizedScale = 0.5 / maxDim;
-
-      model.scale.set(normalizedScale, normalizedScale, normalizedScale);
-
-      const newBox = new THREE.Box3().setFromObject(model);
-      const newCenter = newBox.getCenter(new THREE.Vector3());
-      model.position.set(-newCenter.x, -newCenter.y, -newCenter.z);
+      // Escala fija para modelos animados (mismas unidades que los estáticos)
+      model.scale.set(0.3, 0.3, 0.3);
+      model.position.set(0, 0, 0);
 
       group.add(model);
       currentModelsRef.current[index] = model;
